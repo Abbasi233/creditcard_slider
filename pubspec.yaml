@@ -4,7 +4,7 @@ version: 1.0.1
 homepage: https://github.com/GursheeshSingh/creditcard_slider
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
   flutter:
