@@ -1,9 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 
 class PageSlider extends StatelessWidget {
-  PageController _pageController;
+  late final PageController _pageController;
 
   final List<Widget> cards;
   final double percentOfUpperCard;
@@ -53,14 +52,13 @@ class PageSlider extends StatelessWidget {
         int mInitialPage = initialPage % length;
 
         if (_pageController.position.haveDimensions) {
-          value = _pageController.page - index;
+          value = _pageController.page! - index;
 
           if (value >= 0) {
             double _lowerLimit = percentOfUpperCard;
             double _upperLimit = pi / 2;
 
-            value = (_upperLimit - (value.abs() * (_upperLimit - _lowerLimit)))
-                .clamp(_lowerLimit, _upperLimit);
+            value = (_upperLimit - (value.abs() * (_upperLimit - _lowerLimit))).clamp(_lowerLimit, _upperLimit);
             value = _upperLimit - value;
             value *= -1;
           }

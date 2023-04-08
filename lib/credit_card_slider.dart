@@ -15,7 +15,7 @@ enum RepeatCards { down, bothDirection, none }
 ///Use [RepeatCards.bothDirection] for repeating cards on both sides
 ///Use [RepeatCards.down] for repeating cards only down
 class CreditCardSlider extends StatelessWidget {
-  PageController _pageController;
+  late PageController _pageController;
 
   final List<CreditCard> creditCards;
   final double percentOfUpperCard;
@@ -25,7 +25,7 @@ class CreditCardSlider extends StatelessWidget {
 
   CreditCardSlider(
     this.creditCards, {
-    this.onCardClicked,
+    required this.onCardClicked,
     this.repeatCards = RepeatCards.none,
     this.initialCard = 0,
     this.percentOfUpperCard = 0.35,
@@ -46,8 +46,7 @@ class CreditCardSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (repeatCards == RepeatCards.down ||
-        repeatCards == RepeatCards.bothDirection) {
+    if (repeatCards == RepeatCards.down || repeatCards == RepeatCards.bothDirection) {
       return PageView.builder(
         controller: _pageController,
         scrollDirection: Axis.vertical,
@@ -72,14 +71,13 @@ class CreditCardSlider extends StatelessWidget {
         int mInitialPage = initialCard % length;
 
         if (_pageController.position.haveDimensions) {
-          value = _pageController.page - index;
+          value = _pageController.page! - index;
 
           if (value >= 0) {
             double _lowerLimit = percentOfUpperCard;
             double _upperLimit = pi / 2;
 
-            value = (_upperLimit - (value.abs() * (_upperLimit - _lowerLimit)))
-                .clamp(_lowerLimit, _upperLimit);
+            value = (_upperLimit - (value.abs() * (_upperLimit - _lowerLimit))).clamp(_lowerLimit, _upperLimit);
             value = _upperLimit - value;
             value *= -1;
           }
@@ -111,7 +109,7 @@ class CreditCardSlider extends StatelessWidget {
       },
       child: GestureDetector(
         onTap: () {
-          onCardClicked?.call(index % length);
+          onCardClicked.call(index % length);
         },
         child: creditCards[index % length],
       ),
